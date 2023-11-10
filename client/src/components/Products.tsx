@@ -154,7 +154,7 @@ export class Products extends React.PureComponent<ProductsProps, ProductsState> 
                 <input placeholder='Ex: 25' type='number' onChange={this.handlePriceChange} />
               </Form.Field>
               <Form.Field>
-                <label>createdBy</label>
+                <label>Created</label>
                 <input placeholder='Ex: NemNew' onChange={this.handlecreatedByChange} />
               </Form.Field>
               <Button type='submit' primary onClick={this.onProductCreate}>Create</Button>

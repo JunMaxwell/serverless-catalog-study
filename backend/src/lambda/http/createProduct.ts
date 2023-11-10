@@ -13,23 +13,22 @@ export const handler = middy(
     try {
       const newCreatedProduct = await createProduct(userId, newProduct);
       return {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true
+        },
         statusCode: 201,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true
-        },
-        body: JSON.stringify({ item: newCreatedProduct })
-      }
-    }
-    catch (err) {
+        body: JSON.stringify({ message: 'Success', item: newCreatedProduct }),
+      };
+    } catch (exception) {
       return {
-        statusCode: 500,
         headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true
         },
-        body: JSON.stringify(err)
-      }
+        statusCode: 500,
+        body: JSON.stringify({ message: exception })
+      };
     }
   }
 )

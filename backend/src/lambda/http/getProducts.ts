@@ -14,34 +14,35 @@ export const handler = middy(
       if (products) {
         return {
           statusCode: 200,
+          body: JSON.stringify({ items: products }),
           headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Credentials': true
           },
-          body: JSON.stringify({ items: products })
         }
       }
       return {
         statusCode: 404,
+        body: null,
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Credentials': true
         },
-        body: null
       }
     }
-    catch (err){
+    catch (err) {
       return {
         statusCode: 500,
+        body: JSON.stringify(err),
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Credentials': true
         },
-        body: JSON.stringify(err)
       }
     }
   }
 )
+
 handler.use(
   cors({
     credentials: true

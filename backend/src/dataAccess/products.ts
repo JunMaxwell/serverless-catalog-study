@@ -14,18 +14,22 @@ export class Products {
     constructor(
         private readonly docClient: DocumentClient = new XAWS.DynamoDB.DocumentClient(),
         private readonly productsTable = process.env.PRODUCTS_TABLE,
+        private readonly productIndex = process.env.PRODUCT_CREATED_AT_INDEX,
         private readonly bucketName = process.env.ATTACHMENT_S3_BUCKET) { }
 
     getProducts = async (userId: string): Promise<ProductItem[]> => {
         logger.log('info', 'Querying all product...')
         let products: ProductItem[]
-        const result = await this.docClient.query({
-            TableName: this.productsTable,
-            KeyConditionExpression: 'userId = :userId',
-            ExpressionAttributeValues: {
-                ':userId': userId
-            }
-        }).promise()
+        const result = await this.docClient
+            .query({
+                TableName: this.productsTable,
+                IndexName: this.productIndex,
+                KeyConditionExpression: 'userId = :userId',
+                ExpressionAttributeValues: {
+                    ':userId': userId
+                }
+            })
+            .promise()
         products = result.Items as ProductItem[]
         return products
     }

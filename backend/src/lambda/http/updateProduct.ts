@@ -21,17 +21,18 @@ export const handler = middy(
           'Access-Control-Allow-Credentials': true
         },
         body: JSON.stringify({
-          message: 'Update success'
+          message: 'Update success',
+          item: updatedProduct
         })
       }
     } catch (err) {
       return {
         statusCode: 500,
+        body: JSON.stringify(err),
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Credentials': true
         },
-        body: JSON.stringify(err)
       }
     }
   }
